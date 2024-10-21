@@ -10,6 +10,7 @@ public class Player : Actor {
 
     public void Awake() {
         instance = this;
+        HealthSystem.RunAllUnitTests();
     }
 
     public override void Die()

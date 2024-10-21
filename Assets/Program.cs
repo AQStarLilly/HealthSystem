@@ -135,157 +135,173 @@ public class HealthSystem
         // }
     }
 
-    public void Test_TakeDamage_OnlyShield()
+    public static void RunAllUnitTests()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 100;
-        system.health = 100;
-        system.lives = 3;
-
-        system.TakeDamage(20);
-
-        Debug.Assert(80 == system.shield, "Shield should reduce to 80");
-        Debug.Assert(100 == system.health, "Health should remain at 100");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Test_TakeDamage_OnlyShield();
+        Test_TakeDamage_ShieldAndHealth();    
+        Test_TakeDamage_OnlyHealth();    
+        Test_TakeDamage_ReduceHealthToZero();    
+        Test_TakeDamage_ShieldAndHealthToZero();     
+        Test_TakeDamage_NegativeInput();      
+        Test_Heal_Normal();      
+        Test_Heal_NegativeInput();      
+        Test_RegenerateShield_Normal();       
+        Test_RegenerateShield_AtMaxShield();
+        Test_RegenerateShield_NegativeInput();       
+        Test_Revive();       
     }
 
-    public void Test_TakeDamage_ShieldAndHealth()
+    public static void Test_TakeDamage_OnlyShield()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 50;
-        system.health = 100;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 100;
+        healthSystem.health = 100;
+        healthSystem.lives = 3;
 
-        system.TakeDamage(60);
+        healthSystem.TakeDamage(20);
 
-        Debug.Assert(0 == system.shield, "Shield should reduce to 0");
-        Debug.Assert(90 == system.health, "Health should reduce to 90");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Debug.Assert(80 == healthSystem.shield, "Shield should reduce to 80");
+        Debug.Assert(100 == healthSystem.health, "Health should remain at 100");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-    public void Test_TakeDamage_OnlyHealth()
+    public static void Test_TakeDamage_ShieldAndHealth()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 0;
-        system.health = 100;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 50;
+        healthSystem.health = 100;
+        healthSystem.lives = 3;
 
-        system.TakeDamage(20);
+        healthSystem.TakeDamage(60);
 
-        Debug.Assert(0 == system.shield, "Shield should remain at 0");
-        Debug.Assert(80 == system.health, "Health should reduce to 80");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Debug.Assert(0 == healthSystem.shield, "Shield should reduce to 0");
+        Debug.Assert(90 == healthSystem.health, "Health should reduce to 90");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-    public void Test_TakeDamage_ReduceHealthToZero()
+    public static void Test_TakeDamage_OnlyHealth()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 0;
-        system.health = 10;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 0;
+        healthSystem.health = 100;
+        healthSystem.lives = 3;
 
-        system.TakeDamage(20);
+        healthSystem.TakeDamage(20);
 
-        Debug.Assert(0 == system.shield, "Shield should remain at 0");
-        Debug.Assert(0 == system.health, "Health should reduce to 0");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Debug.Assert(0 == healthSystem.shield, "Shield should remain at 0");
+        Debug.Assert(80 == healthSystem.health, "Health should reduce to 80");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-    public void Test_TakeDamage_ShieldAndHealthToZero()
+    public static void Test_TakeDamage_ReduceHealthToZero()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 30;
-        system.health = 20;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 0;
+        healthSystem.health = 10;
+        healthSystem.lives = 3;
 
-        system.TakeDamage(50);
+        healthSystem.TakeDamage(20);
 
-        Debug.Assert(0 == system.shield, "Shield should reduce to 0");
-        Debug.Assert(0 == system.health, "Health should reduce to 0");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Debug.Assert(0 == healthSystem.shield, "Shield should remain at 0");
+        Debug.Assert(0 == healthSystem.health, "Health should reduce to 0");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-    public void Test_TakeDamage_NegativeInput()
+    public static void Test_TakeDamage_ShieldAndHealthToZero()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 100;
-        system.health = 100;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 30;
+        healthSystem.health = 20;
+        healthSystem.lives = 3;
 
-        system.TakeDamage(-10);
+        healthSystem.TakeDamage(50);
 
-        Debug.Assert(1000 == system.shield, "Shield should remain at 100");
-        Debug.Assert(100 == system.health, "Health should remain at 100");
-        Debug.Assert(3 == system.lives, "Lives should remain at 3");
+        Debug.Assert(0 == healthSystem.shield, "Shield should reduce to 0");
+        Debug.Assert(0 == healthSystem.health, "Health should reduce to 0");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-
-
-    public void Test_Heal_Normal()
+    public static void Test_TakeDamage_NegativeInput()
     {
-        HealthSystem system = new HealthSystem();
-        system.health = 50;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 100;
+        healthSystem.health = 100;
+        healthSystem.lives = 3;
 
-        system.Heal(30);
+        healthSystem.TakeDamage(-10);
 
-        Debug.Assert(80 == system.health, "Health should increase to 80");
-    }
-
-    public void Test_Heal_NegativeInput()
-    {
-        HealthSystem system = new HealthSystem();
-        system.health = 50;
-
-        system.Heal(-20);
-
-        Debug.Assert(50 == system.health, "Health should remain at 50");
+        Debug.Assert(1000 == healthSystem.shield, "Shield should remain at 100");
+        Debug.Assert(100 == healthSystem.health, "Health should remain at 100");
+        Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
 
 
-    public void Test_RegenerateShield_Normal()
+    public static void Test_Heal_Normal()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 50;
+        var healthSystem = new HealthSystem();
+        healthSystem.health = 50;
 
-        system.RegenerateShield(30);
+        healthSystem.Heal(30);
 
-        Debug.Assert(80 == system.health, "Shield should increase to 80");
+        Debug.Assert(80 == healthSystem.health, "Health should increase to 80");
     }
 
-    public void Test_RegenerateShield_AtMaxShield()
+    public static void Test_Heal_NegativeInput()
     {
-        HealthSystem system = new HealthSystem();
-        system.shield = 100;
+        var healthSystem = new HealthSystem();
+        healthSystem.health = 50;
 
-        system.RegenerateShield(20);
+        healthSystem.Heal(-20);
 
-        Debug.Assert(100 == system.health, "Shield should remain at 100");
-    }
-
-    public void Test_RegenerateShield_NegativeInput()
-    {
-        HealthSystem system = new HealthSystem();
-        system.shield = 50;
-
-        system.RegenerateShield(-20);
-
-        Debug.Assert(50 == system.health, "Shield should remain at 50");
+        Debug.Assert(50 == healthSystem.health, "Health should remain at 50");
     }
 
 
 
-    public void Test_Revive()
+    public static void Test_RegenerateShield_Normal()
     {
-        HealthSystem system = new HealthSystem();
-        system.health = 10;
-        system.shield = 0;
-        system.lives = 3;
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 50;
 
-        system.Revive();
+        healthSystem.RegenerateShield(30);
 
-        Debug.Assert(100 == system.health, "Health should reset to 100");
-        Debug.Assert(100 == system.shield, "Shield should reset to 100");
-        Debug.Assert(2 == system.lives, "Lives should reduce to 2");
+        Debug.Assert(80 == healthSystem.health, "Shield should increase to 80");
+    }
+
+    public static void Test_RegenerateShield_AtMaxShield()
+    {
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 100;
+
+        healthSystem.RegenerateShield(20);
+
+        Debug.Assert(100 == healthSystem.health, "Shield should remain at 100");
+    }
+
+    public static void Test_RegenerateShield_NegativeInput()
+    {
+        var healthSystem = new HealthSystem();
+        healthSystem.shield = 50;
+
+        healthSystem.RegenerateShield(-20);
+
+        Debug.Assert(50 == healthSystem.health, "Shield should remain at 50");
+    }
+
+
+
+    public static void Test_Revive()
+    {
+        var healthSystem = new HealthSystem();
+        healthSystem.health = 10;
+        healthSystem.shield = 0;
+        healthSystem.lives = 3;
+
+        healthSystem.Revive();
+
+        Debug.Assert(100 == healthSystem.health, "Health should reset to 100");
+        Debug.Assert(100 == healthSystem.shield, "Shield should reset to 100");
+        Debug.Assert(2 == healthSystem.lives, "Lives should reduce to 2");
     }
 }
