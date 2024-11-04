@@ -24,7 +24,7 @@ public class HealthSystem
         return $"Health: {health}, Shield: {shield}, Lives: {lives}, Status: {healthStatus}"; //XP: {xp}/100, Level: {level}";
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage)   //not ignoring negatives when it should - fix this
     {
         // Implement damage logic
         if (shield >= damage)
@@ -44,7 +44,7 @@ public class HealthSystem
         UpdateHealthStatus();
     }
 
-    public void Heal(int hp)
+    public void Heal(int hp)  //doesn't check for negatives - fix this
     {
         // Implement healing logic
         health += hp;
@@ -54,7 +54,7 @@ public class HealthSystem
         UpdateHealthStatus();
     }
 
-    public void RegenerateShield(int hp)
+    public void RegenerateShield(int hp)   //doesn't check for negatives - fix this
     {
         // Implement shield regeneration logic
         shield += hp;
@@ -221,7 +221,7 @@ public class HealthSystem
         Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
 
-    public static void Test_TakeDamage_NegativeInput()
+    public static void Test_TakeDamage_NegativeInput()    //doesn't work properly due to damage method not ignoring negative values
     {
         var healthSystem = new HealthSystem();
         healthSystem.shield = 100;
