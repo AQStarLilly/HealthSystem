@@ -230,7 +230,7 @@ public class HealthSystem
 
         healthSystem.TakeDamage(-10);
 
-        Debug.Assert(1000 == healthSystem.shield, "Shield should remain at 100");
+        Debug.Assert(100 == healthSystem.shield, "Shield should remain at 100");
         Debug.Assert(100 == healthSystem.health, "Health should remain at 100");
         Debug.Assert(3 == healthSystem.lives, "Lives should remain at 3");
     }
