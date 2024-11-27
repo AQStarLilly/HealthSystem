@@ -26,6 +26,12 @@ public class HealthSystem
 
     public void TakeDamage(int damage)   //not ignoring negatives when it should - fix this
     {
+        if(damage < 0)
+        {
+            Debug.LogWarning("Damage value cannot be negative.");
+            return;
+        }
+
         // Implement damage logic
         if (shield >= damage)
         {
@@ -44,20 +50,36 @@ public class HealthSystem
         UpdateHealthStatus();
     }
 
-    public void Heal(int hp)  //doesn't check for negatives - fix this
+    public void Heal(int hp)  
     {
-        // Implement healing logic
-        health += hp;
+        //check if input is negative
+        if(hp < 0)
+        {
+            Debug.LogWarning("Cannot heal with a negative amount.");
+            return;
+        }
+        
+        health += hp;  // add healing amount to health
+
+        //clamp health to the max value of 100
         if (health > 100)
             health = 100;
 
         UpdateHealthStatus();
     }
 
-    public void RegenerateShield(int hp)   //doesn't check for negatives - fix this
+    public void RegenerateShield(int hp)  
     {
-        // Implement shield regeneration logic
-        shield += hp;
+        //check if input is negatvie
+        if(hp < 0)
+        {
+            Debug.LogWarning("Cannot regenerate shield with a negative value.");
+            return;
+        }     
+
+        shield += hp; // add regeneration value to shield
+
+        //clamp shield to the max value of 100
         if (shield > 100)
             shield = 100;
     }
